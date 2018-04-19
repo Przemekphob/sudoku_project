@@ -1,16 +1,13 @@
-import React from 'react';
+import React from "react";
 
-const Tile = (props) => {
-	return (
-		<input 
-			onSubmit={(e) => this.handleSubmit(e)}
-			type="number" 
-			value={this.state.value} 
-			onChange={(e) => props} 
-			min = "1"
-			max = "9"
-		/>
-	)
-}
+const Tile = props => 
+	<input 
+		onChange={props.onChange} 
+		value={props.value} 
+		type="number" 
+		min="1" 
+		max="9" 
+		step="1"
+	/>;
 
 export default Tile;

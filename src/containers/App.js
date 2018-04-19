@@ -1,20 +1,72 @@
 import React from "react";
 import sudoku from "sudoku-umd";
-import Board from "../components/Board";
-import styles from "./App.css";
+import Board from "../components/Board.js";
+import DifficultyButtons from "../components/DifficultyButtons.js";
 
 class App extends React.Component {
-  	constructor(props) {
-    	super(props)
+	constructor(props) {
+		super(props);
 		this.state = {
-		  	initialBoard: '',
-		  	board: ''
-		}
-  	}
+			initialBoard: "",
+			board: ""
 
+		};
+	}
 
+	setDifficultyEasy() {
+		this.setState({ initialBoard: sudoku.generate("easy") });
+	}
 
+	setDifficultyMedium() {
+		this.setState({ initialBoard: sudoku.generate("medium") });
+	}
 
+	setDifficultyHard() {
+		this.setState({ initialBoard: sudoku.generate("hard") });
+	}
+
+	handleChange(e) {
+		this.setState({ board: e.target.value });
+	}
+
+	handleSubmit(e) {
+		e.preventDefault();
+	}
+
+	reset() {
+		this.setState({ initialBoard: "" });
+	}
+
+	solve() {
+	    sudoku.solve(this.state.Board).split('');
+	}
+
+	check() {
+
+	}
+
+	render() {
+		return (
+			<div>
+				<h1>Sudoku</h1>
+				<DifficultyButtons
+					setDifficultyEasy={this.setDifficultyEasy.bind(this)}
+					setDifficultyMedium={this.setDifficultyMedium.bind(this)}
+					setDifficultyHard={this.setDifficultyHard.bind(this)}
+				/>
+   				<div>
+          			<button onClick={() => this.check()}>Check</button>
+          			<button onClick={() => this.reset()}>Restart</button>
+          			<button onClick={() => this.solve()}>Solve</button>
+			   </div>
+				<Board
+					onSubmit={this.handleSubmit.bind(this)}
+					startBoard={this.state.initialBoard}
+					onChange={this.handleChange.bind(this)}
+				/>			   
+			</div>
+		);
+	}
 }
 
 export default App;
