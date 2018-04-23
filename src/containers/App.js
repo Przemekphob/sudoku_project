@@ -8,7 +8,8 @@ class App extends React.Component {
 		super(props);
 		this.state = {
 			initialBoard: "",
-			board: ""
+			board: "",
+			solved: []
 
 		};
 	}
@@ -38,11 +39,16 @@ class App extends React.Component {
 	}
 
 	solve() {
-	    sudoku.solve(this.state.Board).split('');
+	    this.setState({solved: sudoku.solve(this.state.Board).split('')});
 	}
 
-	check() {
-
+	check(board) {
+		const checked = board.join();
+		if (this.state.solved === checked) {
+			alert('Winner');
+		} else {
+			alert('Looser');
+		}
 	}
 
 	render() {
