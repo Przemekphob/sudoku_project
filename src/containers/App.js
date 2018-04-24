@@ -8,48 +8,77 @@ class App extends React.Component {
 		super(props);
 		this.state = {
 			initialBoard: "",
-			board: "",
-			solved: []
+			board: ""
 
 		};
+    	this.handleSolve = this.handleSolve.bind(this);
+    	this.handleRestart = this.handleRestart.bind(this);
+    	this.handleCheck = this.handleCheck.bind(this);
+    	this.updateBoard = this.updateBoard.bind(this);		
+    	this.setDifficultyEasy = this.setDifficultyEasy.bind(this);
+    	this.setDifficultyMedium = this.setDifficultyMedium.bind(this);
+    	this.setDifficultyHard = this.setDifficultyHard.bind(this);
 	}
 
 	setDifficultyEasy() {
-		this.setState({ initialBoard: sudoku.generate("easy") });
+		const easy = sudoku.generate("easy");
+    	this.setState({
+      		initialBoard: easy,
+      		board: easy
+    	});		
 	}
 
 	setDifficultyMedium() {
-		this.setState({ initialBoard: sudoku.generate("medium") });
+		const medium = sudoku.generate("medium");
+    	this.setState({
+      		initialBoard: medium,
+      		board: medium
+    	});	
 	}
 
 	setDifficultyHard() {
-		this.setState({ initialBoard: sudoku.generate("hard") });
+		const hard = sudoku.generate("hard");
+    	this.setState({
+      		initialBoard: hard,
+      		board: hard
+    	});	
 	}
 
-	handleChange(e) {
-		this.setState({ board: e.target.value });
-	}
+  	handleSolve(e) {
+    	const solve = sudoku.solve(this.state.board);
+      	this.setState({
+        	board: solve
+      	});
+ 
+  	}
 
-	handleSubmit(e) {
-		e.preventDefault();
-	}
+  	handleRestart(e) {
+    	const restart = this.state.initialBoard;
+    	this.setState({
+      		board: restart
+    	});
+  	}
 
-	reset() {
-		this.setState({ initialBoard: "" });
-	}
+  	handleCheck(e) {
+    	const solve = sudoku.solve(this.state.board);
+    	const myBoard = this.updateBoard;
+    	if (myBoard  === solve) {
+    		alert("good solution"); 
+    	} else {
+    		alert("wrong solution");
+    	}
 
-	solve() {
-	    this.setState({solved: sudoku.solve(this.state.Board).split('')});
-	}
+  	}
 
-	check(board) {
-		const checked = board.join();
-		if (this.state.solved === checked) {
-			alert('Winner');
-		} else {
-			alert('Looser');
-		}
-	}
+  	updateBoard(id, tile) {
+    	const updatedBoard = this.state.board.split('');
+    	const checkTile = (tile !== '') ? tile : '.'; 
+    	updatedBoard.splice(id, 1, checkTile);
+    	const newBoard = updatedBoard.join('');
+    		this.setState({
+     	 	board: newBoard
+    	});
+  	}
 
 	render() {
 		return (
@@ -61,16 +90,14 @@ class App extends React.Component {
 					setDifficultyHard={this.setDifficultyHard.bind(this)}
 				/>
    				<div>
-          			<button onClick={() => this.check()}>Check</button>
-          			<button onClick={() => this.reset()}>Restart</button>
-          			<button onClick={() => this.solve()}>Solve</button>
+            		<button onClick={this.handleCheck}>Check</button>
+            		<button onClick={this.handleSolve}>Solve</button>
+            		<button onClick={this.handleRestart}>Restart</button>
 			   </div>
-				<Board
-					onSubmit={this.handleSubmit.bind(this)}
-					startBoard={this.state.initialBoard}
-					onChange={this.handleChange.bind(this)}
-				/>			   
-			</div>
+        		<Board board={this.state.board}
+               		initialBoard={this.state.initialBoard}
+               		updateBoard={this.updateBoard}/>
+      			</div>		   
 		);
 	}
 }

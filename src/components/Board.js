@@ -1,19 +1,24 @@
-import React from "react";
-import Tile from "./Tile.js";
+import React from 'react';
+import Tile from './Tile';
 
-import sudoku from "sudoku-umd";
-
-const Board = props => {
-	let tiles = props.startBoard;
-	let splitedTiles = tiles.split("");
-	
-	return (
-		<form onSubmit={props.onSubmit}>
-			{splitedTiles.map((item, index) => (
-				<Tile key={index} onChange={props.onChange} value={item} />
-			))}
-		</form>
-	);
-};
+class Board extends React.Component {
+  	constructor(props) {
+    	super(props);
+    	this.updateBoard = props.updateBoard.bind(this);
+  	}
+  
+  	render() {
+    const arrBoard = this.props.board.split('');
+	    return (
+	      	<div className={'board'}>
+	      	{arrBoard.map((tile, index) => <Tile 
+	          	key={index} 
+	          	id={index} 
+	          	tile={tile} 
+	          	updateBoard={this.updateBoard}/>)}
+	      	</div>
+	    );
+  	}
+}
 
 export default Board;

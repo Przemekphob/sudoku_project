@@ -1,13 +1,22 @@
-import React from "react";
+import React from 'react';
 
-const Tile = props => 
-	<input 
-		onChange={props.onChange} 
-		value={props.value} 
-		type="number" 
-		min="1" 
-		max="9" 
-		step="1"
-	/>;
+class Tile extends React.Component {
+  	handleChange(e) {
+    	this.props.updateBoard(e.target.dataset.id, e.target.value);
+  	}
+
+  	render() {
+    	return (
+      		<input 
+        		type="number" 
+        		min="1" 
+        		max="9" 
+        		data-id={this.props.id}
+        		value={!isNaN(this.props.tile) ? this.props.tile : ''} 
+        		onChange={this.handleChange.bind(this)}
+      		/>
+    	);
+  	}
+}
 
 export default Tile;
