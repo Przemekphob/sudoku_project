@@ -1,5 +1,6 @@
 import React from 'react';
 import Tile from './Tile';
+import style from './Board.css';
 
 class Board extends React.Component {
   	constructor(props) {
@@ -10,7 +11,7 @@ class Board extends React.Component {
   	render() {
     const arrBoard = this.props.board.split('');
 	    return (
-	      	<div className={'board'}>
+	      	<div className={style.board}>
 	      	{arrBoard.map((tile, index) => <Tile 
 	          	key={index} 
 	          	id={index} 

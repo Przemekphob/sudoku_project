@@ -1,6 +1,7 @@
 import React from "react";
 import sudoku from "sudoku-umd";
 import Board from "../components/Board.js";
+import style from './App.css';
 import DifficultyButtons from "../components/DifficultyButtons.js";
 
 class App extends React.Component {
@@ -61,7 +62,7 @@ class App extends React.Component {
 
   	handleCheck(e) {
     	const solve = sudoku.solve(this.state.board);
-    	const myBoard = this.updateBoard;
+    	const myBoard = this.state.board;
     	if (myBoard  === solve) {
     		alert("good solution"); 
     	} else {
@@ -82,7 +83,7 @@ class App extends React.Component {
 
 	render() {
 		return (
-			<div>
+			<div className={style.container}>
 				<h1>Sudoku</h1>
 				<DifficultyButtons
 					setDifficultyEasy={this.setDifficultyEasy.bind(this)}
@@ -96,8 +97,9 @@ class App extends React.Component {
 			   </div>
         		<Board board={this.state.board}
                		initialBoard={this.state.initialBoard}
-               		updateBoard={this.updateBoard}/>
-      			</div>		   
+               		updateBoard={this.updateBoard}
+               	/>
+      		</div>		   
 		);
 	}
 }

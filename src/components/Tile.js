@@ -1,4 +1,5 @@
 import React from 'react';
+import style from './Tile.css';
 
 class Tile extends React.Component {
   	handleChange(e) {
@@ -14,6 +15,7 @@ class Tile extends React.Component {
         		data-id={this.props.id}
         		value={!isNaN(this.props.tile) ? this.props.tile : ''} 
         		onChange={this.handleChange.bind(this)}
+        		className={style.tile}
       		/>
     	);
   	}
