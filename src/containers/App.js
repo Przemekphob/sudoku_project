@@ -47,10 +47,13 @@ class App extends React.Component {
 
   	handleSolve(e) {
     	const solve = sudoku.solve(this.state.board);
-      	this.setState({
+    	if (solve === false) {
+      		alert ('press restart to start again');
+    	} else {
+      		this.setState({
         	board: solve
-      	});
- 
+      		});
+    	}
   	}
 
   	handleRestart(e) {
